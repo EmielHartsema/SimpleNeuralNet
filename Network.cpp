@@ -1,22 +1,48 @@
 #include "Network.h"
 
-Network::Network(mnistReader images, mnistReader labels, const int sizeHL1, const int sizeHL2)
+Network::Network(mnistImages& images, std::vector<int>& hiddenLayerSizes,mnistLabels& labels)
 {
-    // Create 7 layers
-    layers = new LayerBase[7];
-
     // Create input layer
-    layers[0] = new inputLayer(mnistReader);
-    layers[2] = new hiddenLayer(sizeHL1);
-    layers[4] = new hiddenLayer(sizeHL2);
-    layers[6] = new outputLayer(10);
-    
-    layers[1] = new ConnectionLayer(layers[0], layers[2]);
-    layers[3] = new ConnectionLayer(layers[2], layers[4]);
-    layers[5] = new ConnectionLayer(layers[4], layers[6]);
+    layers.push_back(std::make_shared<InputLayer>(images));
 
+    // Create hidden layers
+    for (int hiddenlayersize : hiddenLayerSizes)
+    {
+        layers.push_back(std::make_shared<HiddenLayer>(hiddenlayersize));
+    }    
+
+    // Create output layer
+    layers.push_back(std::make_shared<OutputLayer>(labels));
+
+    // Connect layers
+    for (int i = 0; i < static_cast<int>(layers.size())-1 ; i++)
+    {
+        *layers[i]<<*layers[i+1];
+    }
 }
 
 Network::~Network()
 {
+}
+
+void Network::PropogateForward()
+{
+    for (auto layer : layers)
+    {
+        layer->CalculateActivation();
+    }
+}
+
+void Network::PropogateBackwards()
+{
+    for (int i=layers.size()-1; i>=0; i--)
+    {
+        std::cout << "i = " << i << std::endl;
+        layers[i]->CalculateDerivative();
+    }
+}
+
+void Network::PrintOutputLayer()
+{
+    layers.back()->PrintLayer();
 }

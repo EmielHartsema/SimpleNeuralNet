@@ -13,33 +13,33 @@ DEPS = $(patsubst %,$(IDIR)\%,$(_DEPS))
 _OBJ = mnistReader.o main.o 
 OBJ = $(patsubst %,$(ODIR)\%,$(_OBJ))
 
-#trainNN.exe: main.o mnistReader.o Network.o Layer.o Node.o Connection.o NodeBase.o Entity.o
-trainNN.exe: main.o mnistReader.o Node.o NodeBase.o Entity.o Connection.o
-	g++ -o trainNN.exe main.o mnistReader.o Node.o NodeBase.o Entity.o Connection.o
+#trainNN.exe: main.o mnistReader.o Node.o NodeBase.o Entity.o Connection.o
+trainNN.exe: main.o mnistReader.o Network.o Layer.o Node.o Connection.o NodeBase.o Entity.o
+	g++ -Wall -o trainNN.exe main.o mnistReader.o Network.o Layer.o Node.o NodeBase.o Entity.o Connection.o -g
 
 main.o: main.cpp
-	g++ -o main.o -c main.cpp
+	g++ -Wall -o main.o -c main.cpp -g
 
 mnistReader.o: mnistReader.cpp
-	g++ -o mnistReader.o -c mnistReader.cpp
+	g++ -Wall -o mnistReader.o -c mnistReader.cpp -g
 
 Network.o: Network.cpp
-	g++ -o Network.o -c Network.cpp
+	g++ -Wall -o Network.o -c Network.cpp -g
 
 Layer.o: Layer.cpp
-	g++ -o Layer.o -c Layer.cpp
+	g++ -Wall -o Layer.o -c Layer.cpp -g
 
 Node.o: Node.cpp Connection.o NodeBase.o
-	g++ -o Node.o -c Node.cpp
+	g++ -Wall -o Node.o -c Node.cpp -g
 
 Connection.o: Connection.cpp NodeBase.o Entity.o
-	g++ -o Connection.o -c Connection.cpp
+	g++ -Wall -o Connection.o -c Connection.cpp -g
 
 NodeBase.o: NodeBase.cpp Entity.o
-	g++ -o NodeBase.o -c NodeBase.cpp
+	g++ -Wall -o NodeBase.o -c NodeBase.cpp -g
 
 Entity.o: Entity.cpp
-	g++ -o Entity.o -c Entity.cpp
+	g++ -Wall -o Entity.o -c Entity.cpp -g
 
 .PHONY: clean
 

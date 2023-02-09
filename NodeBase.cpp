@@ -2,12 +2,22 @@
 
 float NodeBase::activationInput()
 {
-    return backwardsConnections->getActivation();
+    float buffer = 0.0f;
+    for (EntityPtr bckconnection : backwardsConnections)
+    {
+        buffer += bckconnection->getActivation();
+    }
+    return buffer;
 }
 
 float NodeBase::derivativeInput()
 {
-    return forwardConnections->getDerivative();
+    float buffer = 0.0f;
+    for (EntityPtr fwdconnection : forwardConnections)
+    {
+        buffer += fwdconnection->getActivation();
+    }
+    return buffer;
 }
 
 void NodeBase::CalculateActivation()

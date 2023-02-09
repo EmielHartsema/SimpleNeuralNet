@@ -1,12 +1,15 @@
 #pragma once
 #include "Entity.h"
 
+class NodeBase;
+typedef std::shared_ptr<NodeBase> NodeBasePtr;
+
 class NodeBase : public ActiveEntity
 {
 private:
     
 public:
-    float bias = 3.0f;
+    float bias = 0.0f;
     NodeBase() = default;
     ~NodeBase() = default;
     virtual float activationFunction(float input) = 0;

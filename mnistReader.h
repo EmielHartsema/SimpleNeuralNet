@@ -21,3 +21,6 @@ public:
     uint8_t operator()(int x, int y, int img);
     uint8_t operator()(int idx);
 };
+
+typedef mnistReader mnistImages;
+typedef mnistReader mnistLabels;

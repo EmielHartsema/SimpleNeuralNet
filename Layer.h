@@ -1,27 +1,35 @@
 #pragma once
+#include "mnistReader.h"
 #include "Node.h"
 #include "Connection.h"
 
 class LayerBase
 {
-private:
-    const int layerSize;
+protected:
+    std::vector<NodeBasePtr> nodes;
 public:
-    LayerBase(int size);
-    ~LayerBase();
+    LayerBase() = default;
+    ~LayerBase() = default;
+    LayerBase& operator<<(LayerBase& nextLayer);
+    void CalculateActivation();
+    void CalculateDerivative();
+    void PrintLayer();
 };
 
-template<typename T>
-class LayerTemplate : LayerBase
+class InputLayer : public LayerBase
 {
-private:
-    T* layerEntity;
-public:
-    LayerTemplate(int size);
-    ~LayerTemplate();
+    public:
+    InputLayer(mnistReader images);
 };
 
-typedef LayerTemplate<InputNode>  InputLayer;
-typedef LayerTemplate<OutputNode> OutputLayer;
-typedef LayerTemplate<HiddenNode> HiddenLayer;
-typedef LayerTemplate<Connection> ConnectionLayer;
+class HiddenLayer : public LayerBase
+{
+    public:
+    HiddenLayer(int size);
+};
+
+class OutputLayer : public LayerBase
+{
+    public:
+    OutputLayer(mnistReader labels);
+};

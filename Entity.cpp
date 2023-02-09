@@ -1,30 +1,23 @@
 #include "Entity.h"
 
-void Entity::SetForwardsConnection(Entity& fwdConnection)
+void Entity::SetForwardsConnection(EntityPtr fwdConnection)
 {
-    forwardConnections = &fwdConnection;
+    forwardConnections.push_back(fwdConnection);
 }
 
-void Entity::SetBackwardsConnection(Entity& bckConnection)
+void Entity::SetBackwardsConnection(EntityPtr bckConnection)
 {
-    backwardsConnections = &bckConnection;
-}
-
-Entity& Entity::operator<<(Entity& fwdConnection)
-{
-    SetForwardsConnection(fwdConnection);
-    fwdConnection.SetBackwardsConnection(*this);
-    return fwdConnection;
+    backwardsConnections.push_back(bckConnection);
 }
 
 void Entity::printActivation()
 {
-    std::cout << getActivation() << std::endl;
+    std::cout << "Activation = " << getActivation() << std::endl;
 }
 
 void Entity::printDerivative()
 {
-    std::cout << getDerivative() << std::endl;
+    std::cout << "Derivative = " << getDerivative() << std::endl;
 }
 
 float ActiveEntity::getActivation()

@@ -2,18 +2,18 @@
 
 float Connection::getActivation()
 {
-    return backwardsConnections->getActivation() * weight;
+    return backwardsConnections[0]->getActivation() * weight;
 }
 
 float Connection::getDerivative()
 {
     // return dC/dA given dC/dz
-    float derivative = forwardConnections->getDerivative() * weight;
+    float derivative = forwardConnections[0]->getDerivative() * weight;
     updateWeight();
     return derivative;
 }
 
 void Connection::updateWeight()
 {
-    weight += forwardConnections->getDerivative() * backwardsConnections->getActivation();
+    weight -= forwardConnections[0]->getDerivative() * backwardsConnections[0]->getActivation();
 }

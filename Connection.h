@@ -4,7 +4,7 @@
 class Connection : public PassiveEntity
 {
 private:
-    float weight = 10.0f;
+    float weight = 0.1f;
     void updateWeight();
 public:
     Connection() = default;
@@ -12,3 +12,5 @@ public:
     float getActivation();
     float getDerivative();
 };
+
+typedef std::shared_ptr<Connection> ConnectionPtr;

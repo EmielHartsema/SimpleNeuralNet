@@ -41,5 +41,10 @@ float OutputNode::activationFunction(float input)
 
 float OutputNode::activationFunctionDerivative(float input)
 {
-    return input; // needs someting special
+    return (input>0) ? 1 : 0; // needs someting special
+}
+
+float OutputNode::derivativeInput()
+{
+    return activation-200.0f; // needs someting special
 }

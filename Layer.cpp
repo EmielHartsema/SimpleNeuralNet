@@ -1,25 +1,68 @@
 #include "Layer.h"
 
-LayerBase::LayerBase(int size) : layerSize(size)
+LayerBase& LayerBase::operator<<(LayerBase& nextLayer)
 {
-}
-
-template<typename T>
-LayerTemplate<T>::LayerTemplate(int size) : LayerBase(size)
-{
-    //Allocate space for entities in layer
-    layerEntity = new T[layerSize];
-
-    //Construct all entities
-    for (int i = 0; i < layerSize; i++)
+    for (auto & thisLayerNode : nodes)
     {
-        layerEntity[i]();
-    }
+        for (auto & NextLayerNode : nextLayer.nodes)
+        {
+            std::shared_ptr<Connection> conn = std::make_shared<Connection>();
+            thisLayerNode->SetForwardsConnection(conn);
 
+            conn->SetBackwardsConnection(thisLayerNode);
+            conn->SetForwardsConnection(NextLayerNode);
+
+            NextLayerNode->SetBackwardsConnection(conn);
+        }
+    }
+    return nextLayer;
 }
 
-template<typename T>
-LayerTemplate<T>::~LayerTemplate()
+void LayerBase::CalculateActivation()
 {
+    for (NodeBasePtr node : nodes)
+    {
+        node->CalculateActivation();
+    }
+}
 
+void LayerBase::CalculateDerivative()
+{
+    for (NodeBasePtr node : nodes)
+    {
+        node->CalculateDerivative();
+    }
+}
+
+void LayerBase::PrintLayer()
+{
+    for (NodeBasePtr node : nodes)
+    {
+        node->printActivation();
+        node->printDerivative();
+    }
+}
+
+InputLayer::InputLayer(mnistReader images)
+{
+    for (int i = 0; i < images.imageRes * images.imageRes; i++)
+    {
+        nodes.push_back(std::make_shared<InputNode>());
+    }
+}
+
+HiddenLayer::HiddenLayer(int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        nodes.push_back(std::make_shared<HiddenNode>());
+    }
+}
+
+OutputLayer::OutputLayer(mnistReader labels)
+{
+    for (int i = 0; i < 10; i++)
+    {
+        nodes.push_back(std::make_shared<OutputNode>());
+    }
 }

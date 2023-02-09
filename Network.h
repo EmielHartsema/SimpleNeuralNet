@@ -1,12 +1,16 @@
 #pragma once
+#include <memory>
 #include "mnistReader.h"
 #include "Layer.h"
 
 class Network
 {
 private:
-    LayerBase* layers;
+    std::vector<std::shared_ptr<LayerBase>> layers;
 public:
-    Network(mnistReader images, mnistReader labels, const int sizeHL1, const int sizeHL2);
+    Network(mnistImages& images, std::vector<int>& hiddenLayerSizes,mnistLabels& labels);
     ~Network();
+    void PropogateForward();
+    void PropogateBackwards();
+    void PrintOutputLayer();
 };

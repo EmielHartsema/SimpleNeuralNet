@@ -6,23 +6,29 @@
 // Date: 24-1-2023
 #pragma once
 #include <iostream>
+#include <memory>
+#include <vector>
+
+class Entity;
+typedef std::shared_ptr<Entity> EntityPtr;
+
 
 class Entity
 {
 private:
 
 protected:
-    Entity* forwardConnections = nullptr;
-    Entity* backwardsConnections = nullptr;
+    std::vector<EntityPtr> forwardConnections;
+    std::vector<EntityPtr> backwardsConnections;
     
 public:
     Entity() = default;
     ~Entity() = default;
     virtual float getActivation() = 0;
     virtual float getDerivative() = 0;
-    void SetForwardsConnection(Entity& fwdConnection);
-    void SetBackwardsConnection(Entity& bckConnection);
-    Entity& operator<<(Entity& fwdConnection);
+    void SetForwardsConnection(EntityPtr fwdConnection);
+    void SetBackwardsConnection(EntityPtr bckConnection);
+
     void printActivation();
     void printDerivative();
 };
