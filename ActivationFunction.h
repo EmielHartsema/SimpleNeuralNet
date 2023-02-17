@@ -1,16 +1,54 @@
 #pragma once
+//#include "Activation.h"
 
-class ActivationFunctionBase
+/*
+class ActivationFunction
 {
-    private:
-
     public:
-    ActivationFunctionBase() = default;
-    ~ActivationFunctionBase() = default;
-    virtual float activationFunction(float input) = 0;
+    ActivationFunction() = default;
+    ~ActivationFunction() = default;
+
+    virtual float CalculateActivation(float input, float parameter) = 0;
+    virtual float CalculateDerivative(float input, float parameter) = 0;
+};
+*/
+
+//class Identity : public ActivationFunction
+class Identity
+{
+public:
+    Identity() = default;
+    ~Identity() = default;
+    static float CalculateActivation(float input, float parameter = 0);
+    static float CalculateDerivative(float input, float parameter = 0);
 };
 
-class ReLu : public ActivationFunctionBase
+//class Multiplication : public ActivationFunction
+class Multiplication
 {
-    float activationFunction(float input) override;
+public:
+    Multiplication() = default;
+    ~Multiplication() = default;
+    static float CalculateActivation(float input, float parameter = 1);
+    static float CalculateDerivative(float input, float parameter = 1);
+};
+
+//class Addition : public ActivationFunction
+class Addition
+{
+public:
+    Addition() = default;
+    ~Addition() = default;
+    static float CalculateActivation(float input, float parameter = 0);
+    static float CalculateDerivative(float input, float parameter = 0);
+};
+
+//class ReLu : public ActivationFunction
+class ReLu
+{
+public:
+    ReLu() = default;
+    ~ReLu() = default;
+    static float CalculateActivation(float input, float parameter = 1) { return 1.0f; };
+    static float CalculateDerivative(float input, float parameter = 1) { return 1.0f; };
 };

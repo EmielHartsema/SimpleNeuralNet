@@ -1,45 +1,22 @@
 #pragma once
 #include "NodeBase.h"
+#include "Entity.h"
+#include "Parameter.h"
+#include "ActivationFunction.h"
+#include "Activation.h"
 
-class InputNode;
-class HiddenNode;
-class OutputNode;
-
-typedef std::shared_ptr<InputNode>  InputNodePtr;
-typedef std::shared_ptr<HiddenNode> HiddenNodePtr;
-typedef std::shared_ptr<OutputNode> OutputNodePtr;
-
-class HiddenNode : public NodeBase
+template <Parameter paramtype, ActivationFunction ActivationFunctionType, Activation activationType>
+class Node : public NodeBase, public Entity, public paramtype, public ActivationFunctionType, public activationType
 {
 private:
     
 public:
-    HiddenNode() = default;
-    ~HiddenNode() = default;
-    float activationFunction(float input);
-    float activationFunctionDerivative(float input);
-};
+    Node() = default;
+    ~Node() = default;
+    //getActivation()
+    Entity::getActivation() { ActivationFunctionType::CalculateActivation(GetActivationInput(), paramtype::GetParameter()) }; // needed for interfacing with Entity
+    Entity::getDerivative() { ActivationFunctionType::CalculateDerivative(GetDerivativeInput(), paramtype::GetParameter()) };
 
-class InputNode : public NodeBase
-{
-private:
-
-public:
-    InputNode() = default;
-    ~InputNode() = default;
-    float activationFunction(float input);
-    float activationFunctionDerivative(float input);
-    float activationInput() override;
-};
-
-class OutputNode : public NodeBase
-{
-private:
-
-public:
-    OutputNode() = default;
-    ~OutputNode() = default;
-    float activationFunction(float input);
-    float activationFunctionDerivative(float input);
-    float derivativeInput() override;
+    //CalculateActivation(); // needed for interfacing with Activation
+    //CalculateDerivative();
 };

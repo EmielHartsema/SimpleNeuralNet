@@ -10,22 +10,22 @@ void Entity::SetBackwardsConnection(EntityPtr bckConnection)
     backwardsConnections.push_back(bckConnection);
 }
 
-void Entity::printActivation()
+float Entity::GetActivationInput()
 {
-    std::cout << "Activation = " << getActivation() << std::endl;
+    float buffer = 0.0f;
+    for (EntityPtr entityPtr : backwardsConnections)
+    {
+        buffer = buffer + entityPtr->GetActivation();
+    }
+    return buffer;
 }
 
-void Entity::printDerivative()
+float Entity::GetDerivativeInput()
 {
-    std::cout << "Derivative = " << getDerivative() << std::endl;
-}
-
-float ActiveEntity::getActivation()
-{
-    return activation;
-}
-
-float ActiveEntity::getDerivative()
-{
-    return derivative;
+    float buffer = 0.0f;
+    for (EntityPtr entityPtr : forwardConnections)
+    {
+        buffer = buffer + entityPtr->GetDerivative();
+    }
+    return buffer;
 }

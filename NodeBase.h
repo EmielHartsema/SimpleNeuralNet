@@ -1,22 +1,26 @@
 #pragma once
 #include "Entity.h"
+#include "ActivationFunction.h"
+//class NodeBase;
+//typedef std::shared_ptr<NodeBase<Entity>> NodeBasePtr;
 
-class NodeBase;
-typedef std::shared_ptr<NodeBase> NodeBasePtr;
-
-class NodeBase : public ActiveEntity
+template<typename entityType, typename activationFunctionType>
+class NodeBase : public entityType
 {
-private:
-    
-public:
-    float bias = 0.0f;
-    NodeBase() = default;
-    ~NodeBase() = default;
-    virtual float activationFunction(float input) = 0;
-    virtual float activationFunctionDerivative(float input) = 0;
-    virtual float activationInput();
-    virtual float derivativeInput();
-    void CalculateActivation();
-    void CalculateDerivative();
-    void UpdateBias();
+	float CalculateActivation() { return activationFunctionType::CalculateActivation(1.0f); };
+	float CalculateDerivative() { return activationFunctionType::CalculateActivation(1.0f); };
 };
+
+/*
+template<Entity entityType>
+class TrainableNode : public NodeBase<entityType>
+{
+
+};
+
+template<Entity entityType>
+class StaticNode : public NodeBase<entityType>
+{
+
+};
+*/

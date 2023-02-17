@@ -1,16 +1,21 @@
 #include <iostream>
-#include "mnistReader.h"
-#include "Network.h"
-#include "Node.h"
-#include "Connection.h"
-#include <vector>
-#include "Entity.h"
 #include <memory>
+#include <vector>
+
+//#include "mnistReader.h"
+//#include "Network.h"
+//#include "Node.h"
+//#include "Connection.h"
+#include "Entity.h"
+#include "NodeBase.h"
+#include "ActivationFunction.h"
+
 
 int main()
 {
-    mnistImages mnistImages("./data/train-images-idx3.ubyte");
-    mnistLabels mnistLabels("./data/train-labels-idx1.ubyte");
+    NodeBase<ActiveEntity, ReLu> activeNodeBase;
+    //mnistImages mnistImages("./data/train-images-idx3.ubyte");
+    //mnistLabels mnistLabels("./data/train-labels-idx1.ubyte");
     
     /*
     InputNodePtr inNode = std::make_shared<InputNode>();
@@ -44,13 +49,13 @@ int main()
     outLayer->PrintLayer();
     */
     
-    
+    /*
     std::vector<int> vec = {16, 16};
     Network neuralNet(mnistImages, vec, mnistLabels);
     neuralNet.PropogateForward();
     neuralNet.PropogateBackwards();
     neuralNet.PrintOutputLayer();
-    
+    */
 
     //std::shared_ptr<Entity> ent = std::make_shared<InputNode>();
     std::cout << "Successful excecution!" << std::endl;

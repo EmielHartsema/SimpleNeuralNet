@@ -1,3 +1,4 @@
+/*
 #include "Node.h"
 
 float NodeBase::activationInput()
@@ -15,7 +16,7 @@ float NodeBase::derivativeInput()
     float buffer = 0.0f;
     for (EntityPtr fwdconnection : forwardConnections)
     {
-        buffer += fwdconnection->getActivation();
+        buffer += fwdconnection->getDerivative();
     }
     return buffer;
 }
@@ -36,3 +37,4 @@ void NodeBase::UpdateBias()
 {
     bias -= derivative;
 }
+*/
